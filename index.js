@@ -30,49 +30,121 @@ const obj = {
   setData: new Set(["a", "b", { c: 1, d: 1 }]),
 };
 
-function cloneDeep(obj) {
-  if (obj === null || typeof obj !== "object") {
-    return obj;
-  }
+const copyValidations = [
+  {
+    validation: isArray,
+    cloneFunc: cloneArray,
+  },
+  {
+    validation: isSet,
+    cloneFunc: cloneSet,
+  },
+  {
+    validation: isMap,
+    cloneFunc: cloneMap,
+  },
+  {
+    validation: isDate,
+    cloneFunc: cloneDate,
+  },
+  {
+    validation: isRegExp,
+    cloneFunc: cloneRegExp,
+  },
+  {
+    validation: isTypedArray,
+    cloneFunc: cloneArray,
+  },
+  {
+    // 가장 밑에있어야함
+    // object 말고도 typeOf 로 비교시 object 로 나오는 객체들 때문에 (Array)
+    validation: isObject,
+    cloneFunc: cloneObject,
+  },
+];
+const typedArrayValidations = [
+  Int8Array,
+  Uint8Array,
+  Int16Array,
+  Uint16Array,
+  Int32Array,
+  Uint32Array,
+  Float32Array,
+  Float64Array,
+  BigInt64Array,
+  BigUint64Array,
+];
 
-  // Array 체크
-  if (Array.isArray(obj)) {
-    return obj.map((item) =>
-      typeof item === "object" ? cloneDeep(item) : item
+function cloneDeep(obj) {
+  // 원시값일시 return
+  if (!isObject(obj)) return obj;
+
+  for (const value of copyValidations) {
+    if (value.validation(obj)) return value.cloneFunc(obj);
+  }
+}
+
+// typeCheck
+function isArray(obj) {
+  return Array.isArray(obj);
+}
+
+function isMap(obj) {
+  return obj instanceof Map;
+}
+
+function isSet(obj) {
+  return obj instanceof Set;
+}
+
+function isDate(obj) {
+  return obj instanceof Date;
+}
+
+function isRegExp(obj) {
+  return obj instanceof RegExp;
+}
+
+function isObject(obj) {
+  return obj !== null && typeof obj === "object";
+}
+function isTypedArray(obj) {
+  return typedArrayValidations.some((type) => obj instanceof type);
+}
+
+// typeClone
+function cloneArray(obj) {
+  return obj.map((item) => (isObject(item) ? cloneDeep(item) : item));
+}
+function cloneMap(obj) {
+  const copyMap = new Map();
+  for (const [key, value] of obj) {
+    // Map 은 key 가 object 일수도있다.
+    copyMap.set(
+      isObject(key) ? cloneDeep(key) : key,
+      isObject(value) ? cloneDeep(value) : value
     );
   }
-
-  // Map 체크
-  if (obj instanceof Map) {
-    const copyMap = new Map();
-    obj.forEach((value, key) => {
-      copyMap.set(key, typeof value === "object" ? cloneDeep(value) : value);
-    });
-    return copyMap;
+  return copyMap;
+}
+function cloneSet(obj) {
+  const copySet = new Set();
+  for (const value of obj) {
+    copySet.add(isObject(value) ? cloneDeep(value) : value);
   }
-
-  // Set 체크
-  if (obj instanceof Set) {
-    const copySet = new Set();
-    obj.forEach((value) => {
-      copySet.add(typeof value === "object" ? cloneDeep(value) : value);
-    });
-    return copySet;
-  }
-
-  // Object 체크 (Date, RegExp)
+  return copySet;
+}
+function cloneDate(obj) {
+  return new Date(obj);
+}
+function cloneRegExp(obj) {
+  return new RegExp(obj);
+}
+function cloneObject(obj) {
   const copyObj = {};
   for (const key in obj) {
-    copyObj[key] =
-      obj[key] instanceof Date
-        ? new Date(obj[key])
-        : obj[key] instanceof RegExp
-        ? new RegExp(obj[key])
-        : typeof obj[key] === "object"
-        ? cloneDeep(obj[key])
-        : obj[key];
+    copyObj[key] = isObject(obj[key]) ? cloneDeep(obj[key]) : obj[key];
   }
-
   return copyObj;
 }
 

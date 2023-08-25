@@ -3,11 +3,8 @@
 import {
   isObject,
   isArray,
-  isDate,
-  isMap,
-  isRegExp,
-  isSet,
   isTypedArray,
+  isTypeInstanceofCheck,
 } from "./isTypeCheck.js";
 import {
   cloneArray,
@@ -54,28 +51,33 @@ const copyValidations = [
     cloneFunc: cloneArray,
   },
   {
-    validation: isSet,
-    cloneFunc: cloneSet,
-  },
-  {
-    validation: isMap,
-    cloneFunc: cloneMap,
-  },
-  {
-    validation: isDate,
-    cloneFunc: cloneDate,
-  },
-  {
-    validation: isRegExp,
-    cloneFunc: cloneRegExp,
-  },
-  {
     validation: isTypedArray,
     cloneFunc: cloneArray,
   },
   {
+    validation: isTypeInstanceofCheck,
+    cloneFunc: cloneSet,
+    type: Set,
+  },
+  {
+    validation: isTypeInstanceofCheck,
+    cloneFunc: cloneMap,
+    type: Map,
+  },
+  {
+    validation: isTypeInstanceofCheck,
+    cloneFunc: cloneDate,
+    type: Date,
+  },
+  {
+    validation: isTypeInstanceofCheck,
+    cloneFunc: cloneRegExp,
+    type: RegExp,
+  },
+
+  {
     // 가장 밑에있어야함
-    // object 말고도 typeOf 로 비교시 object 로 나오는 객체들 때문에 (Array)
+    // object 말고도 typeOf 로 비교시 object 로 나오는 객체들 때문에
     validation: isObject,
     cloneFunc: cloneObject,
   },
@@ -85,7 +87,7 @@ function cloneDeep(obj) {
   if (!isObject(obj)) return obj;
 
   for (const value of copyValidations) {
-    if (value.validation(obj)) return value.cloneFunc(obj);
+    if (value.validation(obj, value.type ?? null)) return value.cloneFunc(obj);
   }
 }
 

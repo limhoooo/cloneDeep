@@ -17,18 +17,11 @@ function isObject(obj) {
 function isArray(obj) {
   return Array.isArray(obj);
 }
-function isMap(obj) {
-  return obj instanceof Map;
+
+function isTypeInstanceofCheck(obj, type) {
+  return obj instanceof type;
 }
-function isSet(obj) {
-  return obj instanceof Set;
-}
-function isDate(obj) {
-  return obj instanceof Date;
-}
-function isRegExp(obj) {
-  return obj instanceof RegExp;
-}
+
 function isTypedArray(obj) {
   return typedArrayValidations.some((type) => obj instanceof type);
 }
@@ -36,10 +29,7 @@ function isTypedArray(obj) {
 export {
   isObject,
   isArray,
-  isMap,
-  isSet,
-  isDate,
-  isRegExp,
   isTypedArray,
+  isTypeInstanceofCheck,
   typedArrayValidations,
 };

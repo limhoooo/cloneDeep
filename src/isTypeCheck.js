@@ -18,18 +18,12 @@ function isArray(obj) {
   return Array.isArray(obj);
 }
 
-function isTypeInstanceofCheck(obj, type) {
+function isTypeInstanceofCheck(type, obj) {
   return obj instanceof type;
 }
 
 function isTypedArray(obj) {
-  return typedArrayValidations.some((type) => isTypeInstanceofCheck(obj, type));
+  return typedArrayValidations.some((type) => isTypeInstanceofCheck(type, obj));
 }
 
-export {
-  isObject,
-  isArray,
-  isTypedArray,
-  isTypeInstanceofCheck,
-  typedArrayValidations,
-};
+export { isObject, isArray, isTypedArray, isTypeInstanceofCheck };

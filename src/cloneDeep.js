@@ -55,24 +55,20 @@ const copyValidations = [
     cloneFunc: cloneArray,
   },
   {
-    validation: isTypeInstanceofCheck,
+    validation: isTypeInstanceofCheck.bind(null, Set),
     cloneFunc: cloneSet,
-    type: Set,
   },
   {
-    validation: isTypeInstanceofCheck,
+    validation: isTypeInstanceofCheck.bind(null, Map),
     cloneFunc: cloneMap,
-    type: Map,
   },
   {
-    validation: isTypeInstanceofCheck,
+    validation: isTypeInstanceofCheck.bind(null, Date),
     cloneFunc: cloneDate,
-    type: Date,
   },
   {
-    validation: isTypeInstanceofCheck,
+    validation: isTypeInstanceofCheck.bind(null, RegExp),
     cloneFunc: cloneRegExp,
-    type: RegExp,
   },
 
   {
@@ -87,7 +83,7 @@ function cloneDeep(obj) {
   if (!isObject(obj)) return obj;
 
   for (const value of copyValidations) {
-    if (value.validation(obj, value.type ?? null)) return value.cloneFunc(obj);
+    if (value.validation(obj)) return value.cloneFunc(obj);
   }
 }
 

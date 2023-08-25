@@ -10,9 +10,9 @@ import {
   cloneArray,
   cloneDate,
   cloneMap,
-  cloneObject,
   cloneRegExp,
   cloneSet,
+  cloneObject,
 } from "./cloneData.js";
 
 const obj = {
@@ -70,7 +70,6 @@ const copyValidations = [
     validation: isTypeInstanceofCheck.bind(null, RegExp),
     cloneFunc: cloneRegExp,
   },
-
   {
     // 가장 밑에있어야함
     // object 말고도 typeOf 로 비교시 object 로 나오는 객체들 때문에

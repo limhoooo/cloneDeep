@@ -23,7 +23,7 @@ function isTypeInstanceofCheck(obj, type) {
 }
 
 function isTypedArray(obj) {
-  return typedArrayValidations.some((type) => obj instanceof type);
+  return typedArrayValidations.some((type) => isTypeInstanceofCheck(obj, type));
 }
 
 export {

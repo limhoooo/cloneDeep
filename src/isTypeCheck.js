@@ -33,4 +33,13 @@ function isTypedArray(obj) {
   return typedArrayValidations.some((type) => obj instanceof type);
 }
 
-export { isObject, isArray, isMap, isSet, isDate, isRegExp, isTypedArray };
+export {
+  isObject,
+  isArray,
+  isMap,
+  isSet,
+  isDate,
+  isRegExp,
+  isTypedArray,
+  typedArrayValidations,
+};

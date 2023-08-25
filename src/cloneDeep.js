@@ -78,7 +78,7 @@ const copyValidations = [
     cloneFunc: cloneObject,
   },
 ];
-function cloneDeep(obj) {
+export function cloneDeep(obj) {
   // 원시값일시 return
   if (!isObject(obj)) return obj;
 
@@ -86,8 +86,6 @@ function cloneDeep(obj) {
     if (value.validation(obj)) return value.cloneFunc(obj);
   }
 }
-
-export default cloneDeep;
 
 const copyValue = cloneDeep(obj);
 

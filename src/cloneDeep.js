@@ -1,4 +1,22 @@
-// Date, Set, Map, Symbol, TypedArray, Regex, Array, Object,
+// Date, Set, Map, Symbol, TypedArray, Regex, Array, Object, WeakMap, WeakSet
+
+import {
+  isObject,
+  isArray,
+  isDate,
+  isMap,
+  isRegExp,
+  isSet,
+  isTypedArray,
+} from "./isTypeCheck.js";
+import {
+  cloneArray,
+  cloneDate,
+  cloneMap,
+  cloneObject,
+  cloneRegExp,
+  cloneSet,
+} from "./cloneData.js";
 
 const obj = {
   name: "ben",
@@ -62,19 +80,6 @@ const copyValidations = [
     cloneFunc: cloneObject,
   },
 ];
-const typedArrayValidations = [
-  Int8Array,
-  Uint8Array,
-  Int16Array,
-  Uint16Array,
-  Int32Array,
-  Uint32Array,
-  Float32Array,
-  Float64Array,
-  BigInt64Array,
-  BigUint64Array,
-];
-
 function cloneDeep(obj) {
   // 원시값일시 return
   if (!isObject(obj)) return obj;
@@ -84,69 +89,7 @@ function cloneDeep(obj) {
   }
 }
 
-// typeCheck
-function isArray(obj) {
-  return Array.isArray(obj);
-}
-
-function isMap(obj) {
-  return obj instanceof Map;
-}
-
-function isSet(obj) {
-  return obj instanceof Set;
-}
-
-function isDate(obj) {
-  return obj instanceof Date;
-}
-
-function isRegExp(obj) {
-  return obj instanceof RegExp;
-}
-
-function isObject(obj) {
-  return obj !== null && typeof obj === "object";
-}
-function isTypedArray(obj) {
-  return typedArrayValidations.some((type) => obj instanceof type);
-}
-
-// typeClone
-function cloneArray(obj) {
-  return obj.map((item) => (isObject(item) ? cloneDeep(item) : item));
-}
-function cloneMap(obj) {
-  const copyMap = new Map();
-  for (const [key, value] of obj) {
-    // Map 은 key 가 object 일수도있다.
-    copyMap.set(
-      isObject(key) ? cloneDeep(key) : key,
-      isObject(value) ? cloneDeep(value) : value
-    );
-  }
-  return copyMap;
-}
-function cloneSet(obj) {
-  const copySet = new Set();
-  for (const value of obj) {
-    copySet.add(isObject(value) ? cloneDeep(value) : value);
-  }
-  return copySet;
-}
-function cloneDate(obj) {
-  return new Date(obj);
-}
-function cloneRegExp(obj) {
-  return new RegExp(obj);
-}
-function cloneObject(obj) {
-  const copyObj = {};
-  for (const key in obj) {
-    copyObj[key] = isObject(obj[key]) ? cloneDeep(obj[key]) : obj[key];
-  }
-  return copyObj;
-}
+export default cloneDeep;
 
 const copyValue = cloneDeep(obj);
 

@@ -15,6 +15,7 @@ import {
   cloneObject,
 } from "./cloneData.js";
 
+console.log("aaaa");
 const obj = {
   name: "ben",
   age: 20,

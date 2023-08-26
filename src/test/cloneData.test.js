@@ -6,17 +6,41 @@ import {
   cloneRegExp,
   cloneSet,
 } from "../cloneData.js";
-const typedArray = [
-  { type: Int8Array, value: new Int8Array() },
-  { type: Uint8Array, value: new Uint8Array() },
-  { type: Int16Array, value: new Int16Array() },
-  { type: Uint16Array, value: new Uint16Array() },
-  { type: Int32Array, value: new Int32Array() },
-  { type: Uint32Array, value: new Uint32Array() },
-  { type: Float32Array, value: new Float32Array() },
-  { type: Float64Array, value: new Float64Array() },
-  { type: BigInt64Array, value: new BigInt64Array() },
-  { type: BigUint64Array, value: new BigUint64Array() },
+const typedArrayTestCases = [
+  { description: "Int8Array Test", type: Int8Array, value: new Int8Array() },
+  { description: "Uint8Array Test", type: Uint8Array, value: new Uint8Array() },
+  { description: "Int16Array Test", type: Int16Array, value: new Int16Array() },
+  {
+    description: "Uint16Array Test",
+    type: Uint16Array,
+    value: new Uint16Array(),
+  },
+  { description: "Int32Array Test", type: Int32Array, value: new Int32Array() },
+  {
+    description: "Uint32Array Test",
+    type: Uint32Array,
+    value: new Uint32Array(),
+  },
+  {
+    description: "Float32Array Test",
+    type: Float32Array,
+    value: new Float32Array(),
+  },
+  {
+    description: "Float64Array Test",
+    type: Float64Array,
+    value: new Float64Array(),
+  },
+  {
+    description: "BigInt64Array Test",
+    type: BigInt64Array,
+    value: new BigInt64Array(),
+  },
+  {
+    description: "BigUint64Array Test",
+    type: BigUint64Array,
+    value: new BigUint64Array(),
+  },
 ];
 describe("cloneArray() Test", () => {
   it("Array copy Test", () => {
@@ -32,12 +56,14 @@ describe("cloneArray() Test", () => {
     expect(obj).not.toEqual(cloneData);
     expect(obj[0].a).not.toBe(cloneData[0].a);
   });
-  it("typedArray copy test ", () => {
-    for (const array of typedArray) {
-      const obj = array.value;
-      const cloneData = cloneArray(obj);
-      expect(obj).toEqual(cloneData);
-      expect(obj).not.toBe(cloneData);
+  describe("typedArray copy test ", () => {
+    for (const test of typedArrayTestCases) {
+      it(test.description, () => {
+        const obj = test.value;
+        const cloneData = cloneArray(obj);
+        expect(obj).toEqual(cloneData);
+        expect(obj).not.toBe(cloneData);
+      });
     }
   });
 });

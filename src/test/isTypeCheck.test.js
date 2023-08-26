@@ -5,49 +5,88 @@ import {
   isTypeInstanceofCheck,
 } from "../isTypeCheck.js";
 
-const primitiveType = [String, Number, Boolean, Symbol(), null, undefined];
-const referenceType = [
-  { type: Array, value: new Array() },
-  { type: Function, value: new Function() },
-  { type: Map, value: new Map() },
-  { type: Set, value: new Set() },
-  { type: Date, value: new Date() },
-  { type: RegExp, value: new RegExp() },
+const primitiveTypeTestCases = [
+  { description: "String Test", value: "test" },
+  { description: "Number Test", value: 100 },
+  { description: "Boolean Test", value: true },
+  { description: "Symbol Test", value: Symbol() },
+  { description: "null Test", value: null },
+  { description: "undefined Test", value: undefined },
 ];
-const typedArray = [
-  { type: Int8Array, value: new Int8Array() },
-  { type: Uint8Array, value: new Uint8Array() },
-  { type: Int16Array, value: new Int16Array() },
-  { type: Uint16Array, value: new Uint16Array() },
-  { type: Int32Array, value: new Int32Array() },
-  { type: Uint32Array, value: new Uint32Array() },
-  { type: Float32Array, value: new Float32Array() },
-  { type: Float64Array, value: new Float64Array() },
-  { type: BigInt64Array, value: new BigInt64Array() },
-  { type: BigUint64Array, value: new BigUint64Array() },
+
+const referenceTypeTestCases = [
+  { description: "Array Test", type: Array, value: new Array() },
+  { description: "Function Test", type: Function, value: new Function() },
+  { description: "Map Test", type: Map, value: new Map() },
+  { description: "Set Test", type: Set, value: new Set() },
+  { description: "Date Test", type: Date, value: new Date() },
+  { description: "RegExp Test", type: RegExp, value: new RegExp() },
 ];
+const typedArrayTestCases = [
+  { description: "Int8Array Test", type: Int8Array, value: new Int8Array() },
+  { description: "Uint8Array Test", type: Uint8Array, value: new Uint8Array() },
+  { description: "Int16Array Test", type: Int16Array, value: new Int16Array() },
+  {
+    description: "Uint16Array Test",
+    type: Uint16Array,
+    value: new Uint16Array(),
+  },
+  { description: "Int32Array Test", type: Int32Array, value: new Int32Array() },
+  {
+    description: "Uint32Array Test",
+    type: Uint32Array,
+    value: new Uint32Array(),
+  },
+  {
+    description: "Float32Array Test",
+    type: Float32Array,
+    value: new Float32Array(),
+  },
+  {
+    description: "Float64Array Test",
+    type: Float64Array,
+    value: new Float64Array(),
+  },
+  {
+    description: "BigInt64Array Test",
+    type: BigInt64Array,
+    value: new BigInt64Array(),
+  },
+  {
+    description: "BigUint64Array Test",
+    type: BigUint64Array,
+    value: new BigUint64Array(),
+  },
+];
+
 describe("isObject() Test", () => {
   describe("true Test", () => {
     it("object Test", () => {
       const obj = { a: 1, b: 2 };
       expect(isObject(obj)).toBeTruthy();
     });
-    it("referenceType Test", () => {
-      for (const reference of referenceType) {
-        if (reference.type !== Function)
-          expect(isObject(reference.value)).toBeTruthy();
+    describe("referenceType Test", () => {
+      for (const test of referenceTypeTestCases) {
+        if (test.type !== Function)
+          it(test.description, () => {
+            expect(isObject(test.value)).toBeTruthy();
+          });
       }
     });
-    it("TypedArray Test", () => {
-      for (const array of typedArray) {
-        expect(isObject(array.value)).toBeTruthy();
+    describe("TypedArray Test", () => {
+      for (const test of typedArrayTestCases) {
+        it(test.description, () => {
+          expect(isObject(test.value)).toBeTruthy();
+        });
       }
     });
   });
   describe("false Test", () => {
-    it("primitive Test", () => {
-      for (const primitive of primitiveType) {
-        expect(isObject(primitive)).toBeFalsy();
+    describe("primitive Test", () => {
+      for (const test of primitiveTypeTestCases) {
+        it(test.description, () => {
+          expect(isObject(test.value)).toBeFalsy();
+        });
       }
     });
     it("Function Test", () => {
@@ -66,59 +105,72 @@ describe("isArray() Test", () => {
   });
 
   describe("false Test", () => {
-    it("primitive Test", () => {
-      for (const primitive of primitiveType) {
-        expect(isArray(primitive)).toBeFalsy();
+    describe("primitive Test", () => {
+      for (const test of primitiveTypeTestCases) {
+        it(test.description, () => {
+          expect(isArray(test.value)).toBeFalsy();
+        });
       }
     });
-    it("referenceType Test", () => {
-      for (const reference of referenceType) {
-        if (reference.type !== Array)
-          expect(isArray(reference.value)).toBeFalsy();
+    describe("referenceType Test", () => {
+      for (const test of referenceTypeTestCases) {
+        if (test.type !== Array)
+          it(test.description, () => {
+            expect(isArray(test.value)).toBeFalsy();
+          });
       }
     });
-    it("TypedArray Test", () => {
-      for (const array of typedArray) {
-        expect(isArray(array.value)).toBeFalsy();
+    describe("TypedArray Test", () => {
+      for (const test of typedArrayTestCases) {
+        it(test.description, () => {
+          expect(isArray(test.value)).toBeFalsy();
+        });
       }
     });
   });
 });
 
 describe("isTypeInstanceofCheck() Test", () => {
-  it("referenceType Test", () => {
-    for (const reference of referenceType) {
-      expect(
-        isTypeInstanceofCheck(reference.type, reference.value)
-      ).toBeTruthy();
+  describe("referenceType Test", () => {
+    for (const test of referenceTypeTestCases) {
+      it(test.description, () => {
+        expect(isTypeInstanceofCheck(test.type, test.value)).toBeTruthy();
+      });
     }
   });
-
-  it("TypedArray Test", () => {
-    for (const array of typedArray) {
-      expect(isTypeInstanceofCheck(array.type, array.value)).toBeTruthy();
+  describe("TypedArray Test", () => {
+    for (const test of typedArrayTestCases) {
+      it(test.description, () => {
+        expect(isTypeInstanceofCheck(test.type, test.value)).toBeTruthy();
+      });
     }
   });
 });
 
 describe("isTypedArray() Test", () => {
   describe("true Test", () => {
-    it("TypedArray Test", () => {
-      for (const array of typedArray) {
-        expect(isTypedArray(array.value)).toBeTruthy();
+    describe("TypedArray Test", () => {
+      for (const test of typedArrayTestCases) {
+        it(test.description, () => {
+          expect(isTypedArray(test.value)).toBeTruthy();
+        });
       }
     });
   });
 
   describe("false Test", () => {
-    it("primitive Test", () => {
-      for (const primitive of primitiveType) {
-        expect(isTypedArray(primitive)).toBeFalsy();
+    describe("primitive Test", () => {
+      for (const test of primitiveTypeTestCases) {
+        it(test.description, () => {
+          expect(isTypedArray(test.value)).toBeFalsy();
+        });
       }
     });
-    it("referenceType Test", () => {
-      for (const reference of referenceType) {
-        expect(isTypedArray(reference.value)).toBeFalsy();
+    describe("referenceType Test", () => {
+      for (const test of referenceTypeTestCases) {
+        it(test.description, () => {
+          expect(isTypedArray(test.value)).toBeFalsy();
+        });
       }
     });
   });

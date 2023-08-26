@@ -86,7 +86,7 @@ export function cloneDeep(obj) {
   }
 }
 
-// const copyValue = cloneDeep(obj);
+const copyValue = cloneDeep(obj);
 
 // 객체안의객체 깊은복사 확인
 obj.address.city = 10;
@@ -104,5 +104,5 @@ obj.mapData.get("phone").get("age").a = 100;
 // Set 복사 확인
 obj.setData.delete("a");
 
-// console.log(obj);
-// console.log(copyValue);
+console.log(obj);
+console.log(copyValue);

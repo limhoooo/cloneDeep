@@ -17,13 +17,11 @@ function isObject(obj) {
 function isArray(obj) {
   return Array.isArray(obj);
 }
-
-function isTypeInstanceofCheck(type, obj) {
-  return obj instanceof type;
-}
-
 function isTypedArray(obj) {
   return typedArrayValidations.some((type) => isTypeInstanceofCheck(type, obj));
+}
+function isTypeInstanceofCheck(type, obj) {
+  return obj instanceof type;
 }
 
 export { isObject, isArray, isTypedArray, isTypeInstanceofCheck };

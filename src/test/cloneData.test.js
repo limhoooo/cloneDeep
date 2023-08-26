@@ -6,11 +6,123 @@ import {
   cloneRegExp,
   cloneSet,
 } from "../cloneData.js";
-
+const typedArray = [
+  { type: Int8Array, value: new Int8Array() },
+  { type: Uint8Array, value: new Uint8Array() },
+  { type: Int16Array, value: new Int16Array() },
+  { type: Uint16Array, value: new Uint16Array() },
+  { type: Int32Array, value: new Int32Array() },
+  { type: Uint32Array, value: new Uint32Array() },
+  { type: Float32Array, value: new Float32Array() },
+  { type: Float64Array, value: new Float64Array() },
+  { type: BigInt64Array, value: new BigInt64Array() },
+  { type: BigUint64Array, value: new BigUint64Array() },
+];
 describe("cloneArray() Test", () => {
-  it("array Test", () => {
-    const obj = [1, 2, 3];
-    const cloneObj = cloneArray(obj);
-    expect(obj).toEqual(cloneObj);
+  it("Array copy Test", () => {
+    const obj = [1, "hi", true];
+    const cloneData = cloneArray(obj);
+    expect(obj).toEqual(cloneData);
+    expect(obj).not.toBe(cloneData);
+  });
+  it("Array deep copy test ", () => {
+    const obj = [{ a: 1 }, { b: 2 }];
+    const cloneData = cloneArray(obj);
+    obj[0].a = 100;
+    expect(obj).not.toEqual(cloneData);
+    expect(obj[0].a).not.toBe(cloneData[0].a);
+  });
+  it("typedArray copy test ", () => {
+    for (const array of typedArray) {
+      const obj = array.value;
+      const cloneData = cloneArray(obj);
+      expect(obj).toEqual(cloneData);
+      expect(obj).not.toBe(cloneData);
+    }
+  });
+});
+
+describe("cloneMap() Test", () => {
+  it("Map copy Test", () => {
+    const map = new Map();
+    map.set("a", 1);
+    map.set("b", 2);
+    const cloneData = cloneMap(map);
+    expect(map).toEqual(cloneData);
+    expect(map).not.toBe(cloneData);
+  });
+  it("Map deep copy test", () => {
+    const map = new Map();
+    map.set("obj", { a: 1, b: 2 });
+    const cloneData = cloneMap(map);
+    expect(map).toEqual(cloneData);
+    expect(map).not.toBe(cloneData);
+  });
+});
+
+describe("cloneMap() Test", () => {
+  it("Map copy Test", () => {
+    const map = new Map();
+    map.set("a", 1);
+    map.set("b", 2);
+    const cloneData = cloneMap(map);
+    expect(map).toEqual(cloneData);
+    expect(map).not.toBe(cloneData);
+  });
+  it("Map deep copy test", () => {
+    const map = new Map();
+    map.set("obj", { a: 1, b: 2 });
+    const cloneData = cloneMap(map);
+    expect(map).toEqual(cloneData);
+    expect(map).not.toBe(cloneData);
+  });
+});
+
+describe("cloneSet() Test", () => {
+  it("Set copy Test", () => {
+    const set = new Set();
+    set.add(1);
+    set.add(2);
+    const cloneData = cloneSet(set);
+    expect(set).toEqual(cloneData);
+    expect(set).not.toBe(cloneData);
+  });
+  it("Set deep copy test", () => {
+    const set = new Set();
+    set.add({ a: 1, b: 2 });
+    const cloneData = cloneSet(set);
+    expect(set).toEqual(cloneData);
+    expect(set).not.toBe(cloneData);
+  });
+});
+describe("cloneDate() Test", () => {
+  it("Date copy Test", () => {
+    const date = new Date("2023-08-25T12:00:00");
+    const cloneData = cloneDate(date);
+    expect(date).toEqual(cloneData);
+    expect(date).not.toBe(cloneData);
+  });
+});
+describe("cloneRegExp() Test", () => {
+  it("RegExp copy Test", () => {
+    const regExp = /^abc\d+/gi;
+    const cloneData = cloneRegExp(regExp);
+    expect(regExp.source).toBe(cloneData.source);
+    expect(regExp.flags).toBe(cloneData.flags);
+    expect(regExp).not.toBe(cloneData);
+  });
+});
+describe("cloneObject() Test", () => {
+  it("Object copy Test", () => {
+    const obj = { a: 1, b: 2 };
+    const cloneData = cloneObject(obj);
+    expect(obj).toEqual(cloneData);
+    expect(obj).not.toBe(cloneData);
+  });
+  it("Object deep copy Test", () => {
+    const obj = { a: 1, b: { c: 1, d: 1 } };
+    const cloneData = cloneObject(obj);
+    expect(obj).toEqual(cloneData);
+    expect(obj).not.toBe(cloneData);
   });
 });

@@ -1,7 +1,6 @@
 import { isObject } from "./isTypeCheck.js";
 import { cloneDeep } from "./cloneDeep.js";
 
-// typeClone
 function cloneArray(obj) {
   return obj.map((item) => (isObject(item) ? cloneDeep(item) : item));
 }

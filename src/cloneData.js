@@ -4,6 +4,7 @@ import { cloneDeep } from "./cloneDeep.js";
 function cloneArray(obj) {
   return obj.map((item) => (isObject(item) ? cloneDeep(item) : item));
 }
+
 function cloneMap(obj) {
   const copyMap = new Map();
   for (const [key, value] of obj) {
@@ -15,6 +16,7 @@ function cloneMap(obj) {
   }
   return copyMap;
 }
+
 function cloneSet(obj) {
   const copySet = new Set();
   for (const value of obj) {
@@ -22,11 +24,9 @@ function cloneSet(obj) {
   }
   return copySet;
 }
-function cloneDate(obj) {
-  return new Date(obj);
-}
-function cloneRegExp(obj) {
-  return new RegExp(obj);
+
+function cloneConstructor(type, obj) {
+  return new type(obj);
 }
 function cloneObject(obj) {
   const copyObj = {};
@@ -36,4 +36,4 @@ function cloneObject(obj) {
   return copyObj;
 }
 
-export { cloneArray, cloneMap, cloneSet, cloneDate, cloneRegExp, cloneObject };
+export { cloneArray, cloneMap, cloneSet, cloneConstructor, cloneObject };

@@ -8,10 +8,9 @@ import {
 } from "./isTypeCheck.js";
 import {
   cloneArray,
-  cloneDate,
   cloneMap,
-  cloneRegExp,
   cloneSet,
+  cloneConstructor,
   cloneObject,
 } from "./cloneData.js";
 
@@ -34,11 +33,11 @@ const copyValidations = [
   },
   {
     validation: isTypeInstanceofCheck.bind(null, Date),
-    cloneFunc: cloneDate,
+    cloneFunc: cloneConstructor.bind(null, Date),
   },
   {
     validation: isTypeInstanceofCheck.bind(null, RegExp),
-    cloneFunc: cloneRegExp,
+    cloneFunc: cloneConstructor.bind(null, RegExp),
   },
   {
     // 가장 밑에있어야함

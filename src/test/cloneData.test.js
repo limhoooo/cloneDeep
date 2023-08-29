@@ -1,9 +1,8 @@
 import {
   cloneArray,
-  cloneDate,
   cloneMap,
+  cloneConstructor,
   cloneObject,
-  cloneRegExp,
   cloneSet,
 } from "../cloneData.js";
 const typedArrayTestCases = [
@@ -72,7 +71,7 @@ describe("cloneMap() Test", () => {
   it("Map copy Test", () => {
     const map = new Map();
     map.set("a", 1);
-    map.set("b", 2);
+    map.set({ a: 1, b: 2 }, 2);
     const cloneData = cloneMap(map);
     expect(map).toEqual(cloneData);
     expect(map).not.toBe(cloneData);
@@ -124,7 +123,7 @@ describe("cloneSet() Test", () => {
 describe("cloneDate() Test", () => {
   it("Date copy Test", () => {
     const date = new Date("2023-08-25T12:00:00");
-    const cloneData = cloneDate(date);
+    const cloneData = cloneConstructor(Date, date);
     expect(date).toEqual(cloneData);
     expect(date).not.toBe(cloneData);
   });
@@ -132,7 +131,7 @@ describe("cloneDate() Test", () => {
 describe("cloneRegExp() Test", () => {
   it("RegExp copy Test", () => {
     const regExp = /^abc\d+/gi;
-    const cloneData = cloneRegExp(regExp);
+    const cloneData = cloneConstructor(RegExp, regExp);
     expect(regExp.source).toBe(cloneData.source);
     expect(regExp.flags).toBe(cloneData.flags);
     expect(regExp).not.toBe(cloneData);

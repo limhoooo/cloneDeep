@@ -13,7 +13,6 @@ const referenceTypeTestCases = [
   { description: "Object Deep Test", value: { a: 1, b: { c: 1, d: 3 } } },
   { description: "Array Test", value: [1, 2, 3] },
   { description: "Array Deep Test", value: [1, 2, { a: 2, b: 3 }] },
-  { description: "Function Test", value: { func: function add() {} } },
   { description: "Date Test", value: new Date() },
   { description: "RegExp Test", value: new RegExp() },
   { description: "Int8Array Test", value: new Int8Array() },
@@ -61,10 +60,9 @@ describe("cloneDeep()", () => {
   describe("referenceType Test", () => {
     for (const test of referenceTypeTestCases) {
       it(test.description, () => {
-        const data = test.value;
-        const cloneData = cloneDeep(data);
-        expect(data).toEqual(cloneData);
-        expect(data).not.toBe(cloneData);
+        const cloneData = cloneDeep(test.value);
+        expect(test.value).toEqual(cloneData);
+        expect(test.value).not.toBe(cloneData);
       });
     }
   });

@@ -63,7 +63,6 @@ describe("cloneDeep()", () => {
         const cloneData = cloneDeep(test.value);
         expect(test.value).toEqual(cloneData);
         expect(test.value).not.toBe(cloneData);
-        expect(test.value).not.toBe(cloneData);
       });
     }
   });

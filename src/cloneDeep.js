@@ -5,24 +5,26 @@ import {
   isArray,
   isTypedArray,
   isTypeInstanceofCheck,
-} from "./isTypeCheck.js";
+} from './isTypeCheck.js';
 import {
   cloneArray,
   cloneMap,
   cloneSet,
   cloneConstructor,
   cloneObject,
-} from "./cloneData.js";
+} from './cloneData.js';
 
 const copyValidations = [
   {
     validation: isArray,
     cloneFunc: cloneArray,
   },
+
   {
     validation: isTypedArray,
     cloneFunc: cloneArray,
   },
+
   {
     validation: isTypeInstanceofCheck.bind(null, Set),
     cloneFunc: cloneSet,
@@ -46,7 +48,7 @@ const copyValidations = [
     cloneFunc: cloneObject,
   },
 ];
-export function cloneDeep(obj) {
+export default function cloneDeep(obj) {
   // 원시값일시 return
   if (!isObject(obj)) return obj;
 

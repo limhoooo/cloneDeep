@@ -10,9 +10,8 @@ const typedArrayValidations = [
   BigInt64Array,
   BigUint64Array,
 ];
-
 function isObject(obj) {
-  return obj !== null && typeof obj === "object";
+  return obj !== null && typeof obj === 'object';
 }
 function isArray(obj) {
   return Array.isArray(obj);

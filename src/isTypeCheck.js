@@ -13,6 +13,7 @@ const typedArrayValidations = [
 function isObject(obj) {
   return obj !== null && typeof obj === 'object';
 }
+
 function isArray(obj) {
   return Array.isArray(obj);
 }

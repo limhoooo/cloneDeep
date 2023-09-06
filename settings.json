@@ -7,6 +7,5 @@
     "source.fixAll.eslint": true
   },
   "eslint.alwaysShowStatus": true,
-  "files.autoSave": "onFocusChange",
-  "files.eol": "\n"
+  "files.autoSave": "onFocusChange"
 }

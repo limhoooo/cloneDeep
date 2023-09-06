@@ -5,7 +5,7 @@ import {
   isArray,
   isTypedArray,
   isTypeInstanceofCheck,
-} from './isTypeCheck.js';
+} from "./isTypeCheck.js";
 import {
   cloneArray,
   cloneMap,
@@ -51,7 +51,7 @@ const copyValidations = [
 
 // test
 
-export default function cloneDeep(obj) {
+export function cloneDeep(obj) {
   // 원시값일시 return
   if (!isObject(obj)) return obj;
 

@@ -3,6 +3,7 @@ import commonjs from '@rollup/plugin-commonjs';
 import resolve from '@rollup/plugin-node-resolve';
 import babel from '@rollup/plugin-babel';
 import terser from '@rollup/plugin-terser';
+import serve from 'rollup-plugin-serve';
 
 export default {
   input: 'src/index.js', // 입력 파일의 경로를 수정하세요
@@ -19,6 +20,14 @@ export default {
       babelHelpers: 'bundled',
       presets: ['@babel/preset-env'],
     }), //babel을 사용 할 수 있게 해줌
+    serve({
+      // 서버를 어느 디렉토리에서 호스팅할 것인지 설정합니다.
+      contentBase: ['./'],
+      // 포트 번호를 설정합니다.
+      port: 8081,
+      // 브라우저에서 자동으로 열릴지 여부를 설정합니다.
+      open: true,
+    }),
   ],
 };
 
